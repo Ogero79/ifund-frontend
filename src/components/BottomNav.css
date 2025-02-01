@@ -1,0 +1,46 @@
+/* Bottom Navigation Styles */
+.nav-link {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .nav-icon {
+    color: white;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .nav-icon:hover {
+    color: #11864e;  /* Change to your active color */
+    transform: scale(1.2); /* Slight scaling effect on hover */
+  }
+  
+  .nav-icon.active {
+    color: #11864e; /* Highlight active icon with color */
+  }
+  
+  /* Add a smooth background transition for the active link */
+  .fixed-bottom {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 50px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .fixed-bottom .nav-link {
+    padding: 5px 0;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .fixed-bottom {
+      max-width: 100%;
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+  
