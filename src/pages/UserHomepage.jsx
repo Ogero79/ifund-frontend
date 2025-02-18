@@ -55,8 +55,11 @@ const UserHomepage = () => {
         const response = await axios.get(
           `https://newly-bright-chigger.ngrok-free.app/api/accounts/${userId}`,
           {
-            headers: { Authorization: `Bearer ${token}` },
-            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            withCredentials: true, // Must be included
           }
         );
 
