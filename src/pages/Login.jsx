@@ -25,10 +25,19 @@ const Login = () => {
     try {
       setLoading(true);
       setError('');
-      const response = await axios.post('https://ifund-backend.onrender.com/api/login', {
-        email: formData.email,
-        password: formData.password,
-      });
+      const response = await axios.post(
+        'https://ifund-backend.onrender.com/api/login',
+        {
+          email: formData.email,
+          password: formData.password,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',  // Ensure JSON content is set
+          },
+          withCredentials: true,  // Ensure cookies or credentials are included in the request
+        }
+      );
       const { token, user } = response.data;
 
       localStorage.setItem('authToken', token);
