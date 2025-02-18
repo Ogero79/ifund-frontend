@@ -50,7 +50,7 @@ const SavingsPage = () => {
   const token = localStorage.getItem("authToken");
   const role = localStorage.getItem("userRole");
   const storedUserName = localStorage.getItem("userName");
-  const [unallocatedFunds, setUnallocatedFunds] = useState(0);
+  const [allocatedFunds, setAllocatedFunds] = useState(0);
   const [goals, setGoals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -77,13 +77,13 @@ const SavingsPage = () => {
         setLoading(true);
         setError(null);
         const response = await axios.get(
-          `http://localhost:5000/api/goals/${userId}`,
+          `https://newly-bright-chigger.ngrok-free.app/api/goals/${userId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
 
-        setUnallocatedFunds(response.data.unallocatedFunds || 0);
+        setAllocatedFunds(response.data.allocatedFunds || 0);
         const fetchedGoals = response.data.goals || [];
         setGoals(fetchedGoals);
       } catch (error) {
@@ -101,11 +101,8 @@ const SavingsPage = () => {
     navigate(`/user/goal/${goalId}`);
   };
 
-  return (
-    <div className="savings-page py-4 px-3 px-md-5 px-lg-6 px-xl-7">
-      <Header userImage="https://via.placeholder.com/50" userName={userName} />
-
-      {loading && (
+    if (loading) {
+      return (
         <div
           className="d-flex justify-content-center align-items-center"
           style={{ height: "100vh" }}
@@ -114,12 +111,18 @@ const SavingsPage = () => {
             animation="border"
             role="status"
             variant="primary"
-            style={{ width: "4rem", height: "4rem" }}
+            style={{ width: "5rem", height: "5rem" }}
           >
             <span className="visually-hidden">Loading...</span>
           </Spinner>
         </div>
-      )}
+      );
+    }
+  
+
+  return (
+    <div className="savings-page py-4 px-3 px-md-5 px-lg-6 px-xl-7" >
+      <Header userImage="https://via.placeholder.com/50" userName={userName} />
 
       {!loading && error && (
         <div className="alert alert-danger" role="alert">
@@ -127,7 +130,7 @@ const SavingsPage = () => {
         </div>
       )}
 
-      {!loading && !error && (
+
         <>
           <section className="savings-summary mb-4 text-left d-flex justify-content-center align-items-center">
             <div
@@ -154,10 +157,10 @@ const SavingsPage = () => {
                 }}
               >
                 <h3 className="fw-bold mb-2" style={{ fontSize: "1.5rem" }}>
-                  Ksh. {unallocatedFunds.toLocaleString()}
+                  Ksh. {allocatedFunds.toLocaleString()}
                 </h3>
                 <h5 className="text-muted" style={{ fontSize: "0.9rem" }}>
-                  Total Unallocated Funds
+                  Total Allocated Funds
                 </h5>
               </div>
               <div
@@ -222,7 +225,7 @@ const SavingsPage = () => {
             </div>
           </section>
         </>
-      )}
+
 
       <BottomNavigation />
     </div>

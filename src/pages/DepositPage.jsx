@@ -42,11 +42,12 @@ const DepositPage = () => {
       navigate("/login");
       return;
     }
+
   }, [token, role, navigate]);
 
   const postNotification = async (message) => {
     try {
-      await fetch("http://localhost:5000/api/notifications", {
+      await fetch("https://newly-bright-chigger.ngrok-free.app/api/notifications", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,6 +67,7 @@ const DepositPage = () => {
       return;
     }
 
+    // Validate if the M-Pesa number is correct (matches 10 digits)
     if (!depositDetails.mpesaNumber.match(/^\d{10}$/)) {
       setErrorAlert("Please enter a valid M-Pesa number.");
       return;
@@ -80,12 +82,19 @@ const DepositPage = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/deposits", {
+      // Format the phone number before sending to the API (replace first 0 with 254)
+      const formattedPhoneNumber = depositDetails.mpesaNumber.replace(/^0/, "254");
+
+      const response = await fetch("https://newly-bright-chigger.ngrok-free.app/api/deposits", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...depositDetails, userId }),
+        body: JSON.stringify({
+          ...depositDetails,
+          mpesaNumber: formattedPhoneNumber,  // Use formatted phone number here
+          userId,
+        }),
       });
 
       const data = await response.json();
@@ -97,6 +106,16 @@ const DepositPage = () => {
 
         setLoading(false);
         setShowAlert(true);
+        setDepositDetails({
+          amount: "",
+          mpesaNumber: "",
+          description: "",
+        });
+
+        // Clear the success alert after 5 seconds
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 5000);
       } else {
         setLoading(false);
         setErrorAlert(data.message || "An error occurred. Please try again.");

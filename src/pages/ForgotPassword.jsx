@@ -15,7 +15,7 @@ const ForgotPassword = () => {
     setError('');
 
     try {
-      await axios.post('http://localhost:5000/api/forgot-password', { email });
+      await axios.post('https://newly-bright-chigger.ngrok-free.app/api/forgot-password', { email });
       setMessage('A password reset link has been sent to your email.');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to send reset email.');

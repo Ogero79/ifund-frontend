@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Container, Card, Button, Modal, Alert } from "react-bootstrap";
 import axios from "axios";
+import Sidebar from "../components/Sidebar";
+import TopNavbar from "../components/TopNavbar";
 
 const InterestsPage = () => {
   const [lastUpdate, setLastUpdate] = useState(null);
@@ -13,7 +15,7 @@ const InterestsPage = () => {
 
   const fetchLastUpdate = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/interests/last-update", {
+      const response = await axios.get("https://newly-bright-chigger.ngrok-free.app/api/interests/last-update", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -39,7 +41,7 @@ const InterestsPage = () => {
     setShowModal(false);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/interests/update", {}, {
+      const response = await axios.post("https://newly-bright-chigger.ngrok-free.app/api/interests/update", {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert(response.data.message);
@@ -55,8 +57,19 @@ const InterestsPage = () => {
     fetchLastUpdate();
   }, []);
 
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    
+    const toggleSidebar = () => {
+      setIsSidebarOpen(!isSidebarOpen);
+    };
   return (
-    <Container className="my-4">
+    <div>
+                    <Sidebar isOpen={isSidebarOpen} />
+      <div className={`main-content ${isSidebarOpen ? "" : "expanded"}`}>
+        <TopNavbar
+          isSidebarOpen={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+        />
       <h2>Manage Interests</h2>
       {error && <Alert variant="danger">{error}</Alert>}
 
@@ -102,7 +115,8 @@ const InterestsPage = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </Container>
+    </div>
+    </div>
   );
 };
 

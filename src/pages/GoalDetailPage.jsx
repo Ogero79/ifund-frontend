@@ -27,7 +27,9 @@ const GoalDetailPage = () => {
   const [goalImage, setGoalImage] = useState("");
   const [goalRole, setGoalRole] = useState("");
   const [showMembersModal, setShowMembersModal] = useState(false);
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [members, setMembers] = useState([]);
+  const [membersCount, setMembersCount] = useState(0);
   const [newMember, setNewMember] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -42,6 +44,7 @@ const GoalDetailPage = () => {
   const userId = localStorage.getItem("userId");
   const [showAddMemberInput, setShowAddMemberInput] = useState(false);
   const [memberToRemove, setMemberToRemove] = useState(null);
+  const [amount, setAmount] = useState("");
 
   const storedTheme = localStorage.getItem("theme") || "light";
   const theme = storedTheme;
@@ -59,7 +62,7 @@ const GoalDetailPage = () => {
       }
 
       const response = await axios.get(
-        `http://localhost:5000/api/goal/${goalId}`,
+        `https://newly-bright-chigger.ngrok-free.app/api/goal/${goalId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -108,7 +111,7 @@ const GoalDetailPage = () => {
   const handleDeleteGoal = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/goals/${goalId}/delete`,
+        `https://newly-bright-chigger.ngrok-free.app/api/goals/${goalId}/delete`,
         {
           method: "DELETE",
         }
@@ -140,7 +143,7 @@ const GoalDetailPage = () => {
         }
 
         const response = await axios.get(
-          `http://localhost:5000/api/goal/${goalId}`,
+          `https://newly-bright-chigger.ngrok-free.app/api/goal/${goalId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -167,12 +170,15 @@ const GoalDetailPage = () => {
         setMembers(
           goalData.members.map((member) => ({
             userId: member.user_id,
-            savedAmount: member.saved_amount,
+            name: member.full_name,
+            profile_picture: member.profile_picture,
+            contribution: member.contribution,
             joinedAt: new Date(member.joined_at).toLocaleDateString(),
             goalRole: member.goal_role,
           }))
         );
 
+        setMembersCount(goalData.memberCount);
         setGoalRole(userGoalRole);
       } catch (error) {
         console.error("Error fetching goal details:", error);
@@ -185,13 +191,13 @@ const GoalDetailPage = () => {
     const fetchAccountDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/accounts/${userId}`,
+          `https://newly-bright-chigger.ngrok-free.app/api/accounts/${userId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
         if (response.data && response.data.account) {
-          setBalance(response.data.account.unallocated);
+          setBalance(response.data.account.balance);
         } else {
           setBalance("Not Available");
         }
@@ -217,7 +223,7 @@ const GoalDetailPage = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/goals/${goalId}`,
+        `https://newly-bright-chigger.ngrok-free.app/api/goals/${goalId}`,
         formData,
         {
           headers: {
@@ -243,7 +249,7 @@ const GoalDetailPage = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/goals/${goalId}/members`,
+        `https://newly-bright-chigger.ngrok-free.app/api/goals/${goalId}/members`,
         { userId: newMember },
         {
           headers: {
@@ -259,12 +265,14 @@ const GoalDetailPage = () => {
         setMembers((prevMembers) => [
           ...prevMembers,
           {
-            userId: newMember,
-            savedAmount: 0,
+            userId: newMemberData.user_id,
+            name: newMemberData.full_name,
+            savedAmount: 0.00,
             joinedAt: new Date().toLocaleDateString(),
             goalRole: "member",
           },
         ]);
+        setMembersCount((prevCount) => prevCount + 1);
         setNewMember("");
       }
     } catch (error) {
@@ -304,7 +312,7 @@ const GoalDetailPage = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/goals/${goal.goal_id}/contribute`,
+        `https://newly-bright-chigger.ngrok-free.app/api/goals/${goal.goal_id}/contribute`,
         {
           userId: localStorage.getItem("userId"),
           contributionAmount,
@@ -330,8 +338,8 @@ const GoalDetailPage = () => {
           if (member.userId === localStorage.getItem("userId")) {
             return {
               ...member,
-              savedAmount:
-                parseFloat(member.savedAmount || 0) + contributionAmount,
+              contribution:
+                parseFloat(member.contribution || 0) + contributionAmount,
             };
           }
           return member;
@@ -353,7 +361,7 @@ const GoalDetailPage = () => {
   const handleRemoveMember = async (userId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/goals/${goalId}/members/${userId}`,
+        `https://newly-bright-chigger.ngrok-free.app/api/goals/${goalId}/members/${userId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -363,6 +371,7 @@ const GoalDetailPage = () => {
           prevMembers.filter((m) => m.userId !== userId)
         );
         setMemberToRemove(null);
+        setMembersCount((prevCount) => prevCount - 1);
         alert("Member removed successfully!");
       }
     } catch (error) {
@@ -374,7 +383,7 @@ const GoalDetailPage = () => {
   const handleLeaveGoal = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/goals/${goalId}/members/${userId}`,
+        `https://newly-bright-chigger.ngrok-free.app/api/goals/${goalId}/members/${userId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -397,6 +406,43 @@ const GoalDetailPage = () => {
     const file = e.target.files[0];
     if (file) {
       setGoalImage(file);
+    }
+  };
+
+  const handleWithdraw = async () => {
+    setError(""); // Clear previous errors
+
+    // Convert amount to number and validate
+    const withdrawAmount = parseFloat(amount);
+    if (!withdrawAmount || withdrawAmount <= 0) {
+      setError("Please enter a valid amount.");
+      return;
+    }
+
+    if (withdrawAmount > goal.saved_amount) {
+      setError("Insufficient balance.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        `https://newly-bright-chigger.ngrok-free.app/api/goal/${goalId}/withdraw`,
+        {
+          amount: withdrawAmount,
+          userId,
+        }
+      );
+
+      alert(response.data.message);
+      setAmount("");
+      fetchGoalDetails();
+    } catch (err) {
+      setError(
+        err.response?.data?.message || "An error occurred. Please try again."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -578,6 +624,7 @@ const GoalDetailPage = () => {
                 </div>
 
                 <div className="d-flex justify-content-between">
+                  {/* Show Members Button */}
                   <Button
                     variant="outline-dark"
                     size="sm"
@@ -593,6 +640,7 @@ const GoalDetailPage = () => {
                     Show Members
                   </Button>
 
+                  {/* Contribute Button */}
                   {goal.target_amount - goal.saved_amount > 0 && (
                     <Button
                       variant="light"
@@ -608,6 +656,25 @@ const GoalDetailPage = () => {
                       }}
                     >
                       Contribute <i className="bi bi-arrow-up-right-circle"></i>
+                    </Button>
+                  )}
+
+                  {/* Withdraw Button - Only Show if Funds are Available */}
+                  {goal.saved_amount > 0 && goalRole == 'admin' && (
+                    <Button
+                      variant="success"
+                      size="lg"
+                      onClick={() => setShowWithdrawModal(true)}
+                      className="px-4 py-2 shadow-sm"
+                      style={{
+                        borderRadius: "50px",
+                        border: "none",
+                        color: "#fff",
+                        backgroundColor: "#28a745",
+                        transition: "background 0.3s ease-in-out",
+                      }}
+                    >
+                      Withdraw <i className="bi bi-arrow-down-circle"></i>
                     </Button>
                   )}
                 </div>
@@ -742,8 +809,7 @@ const GoalDetailPage = () => {
             <Row className="mb-3">
               <Col xs={12}>
                 <h5>
-                  Unallocated Balance:{" "}
-                  {balance !== null ? `KES ${balance}` : "Loading..."}
+                  Balance: {balance !== null ? `KES ${balance}` : "Loading..."}
                 </h5>
                 <h5>
                   Remaining: Ksh. {goal.target_amount - goal.saved_amount}
@@ -782,126 +848,206 @@ const GoalDetailPage = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Modal show={showMembersModal} onHide={() => setShowMembersModal(false)}>
+      <Modal
+        show={showWithdrawModal}
+        onHide={() => setShowWithdrawModal(false)}
+      >
         <Modal.Header closeButton>
-          <Modal.Title>
-            Goal Members
-            {goalRole === "admin" && (
-              <Button
-                variant="link"
-                className="p-0 ms-3 text-primary"
-                title="Add Member"
-                onClick={() => setShowAddMemberInput((prev) => !prev)}
-              >
-                <i
-                  className="bi bi-person-plus"
-                  style={{ fontSize: "1.5rem" }}
-                ></i>
-              </Button>
-            )}
-          </Modal.Title>
+          <Modal.Title>Withdraw Funds</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {goalRole === "admin" && showAddMemberInput && (
-            <div className="mb-4">
-              <Form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleAddMember();
-                }}
-              >
-                <Form.Group
-                  className="d-flex align-items-center"
-                  controlId="formAddMember"
-                >
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter member ID"
-                    value={newMember}
-                    onChange={(e) => setNewMember(e.target.value)}
-                  />
-                  <Button variant="primary" type="submit" className="ms-2">
-                    Add
-                  </Button>
-                </Form.Group>
-              </Form>
-            </div>
-          )}
-          <h5 className="mb-3">Members List</h5>
-          {members.length > 0 ? (
-            <ListGroup>
-              {members.map((member, index) => (
-                <ListGroup.Item
-                  key={index}
-                  className="d-flex justify-content-between align-items-center"
-                >
-                  <div>
-                    <strong>{member.userId}</strong> <br />
-                    <span>Saved: {member.savedAmount}</span> <br />
-                    <small>
-                      Joined: {new Date(member.joinedAt).toLocaleDateString()}
-                    </small>
-                  </div>
-                  {member.goalRole === "admin" ? (
-                    <span className="badge bg-primary text-white">Admin</span>
-                  ) : member.userId === userId ? (
-                    <Button
-                      variant="outline-danger"
-                      size="sm"
-                      onClick={() => setMemberToRemove(member)}
-                    >
-                      Leave
-                    </Button>
-                  ) : goalRole === "admin" ? (
-                    <Button
-                      variant="outline-danger"
-                      size="sm"
-                      onClick={() => setMemberToRemove(member)}
-                    >
-                      Remove
-                    </Button>
-                  ) : null}
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
-          ) : (
-            <p className="text-muted text-center">
-              No members yet. Click the icon to add members.
-            </p>
-          )}
+          {error && <Alert variant="danger">{error}</Alert>}
+
+          {/* Informational Message */}
+          <p className="text-muted">
+            The amount you withdraw will be added to your Savings balance. You
+            can manage these funds from your account.
+          </p>
+
+          {/* Amount Input */}
+          <Form.Group className="mb-3">
+            <Form.Label>Amount to Withdraw</Form.Label>
+            <Form.Control
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              placeholder={`Available: ${goal.saved_amount}`}
+            />
+          </Form.Group>
         </Modal.Body>
-        <Modal show={!!memberToRemove} onHide={() => setMemberToRemove(null)}>
-          <Modal.Header closeButton>
-            <Modal.Title>
-              {memberToRemove?.userId === userId
-                ? "Confirm Leave"
-                : "Confirm Removal"}
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Are you sure you want to{" "}
-            {memberToRemove?.userId === userId
-              ? "leave this goal"
-              : `remove ${memberToRemove?.userId}`}
-            ?
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setMemberToRemove(null)}>
-              Cancel
-            </Button>
-            <Button
-              variant="danger"
-              onClick={() =>
-                memberToRemove?.userId === userId
-                  ? handleLeaveGoal()
-                  : handleRemoveMember(memberToRemove?.userId)
-              }
-            >
-              {memberToRemove?.userId === userId ? "Leave" : "Remove"}
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowWithdrawModal(false)}
+          >
+            Cancel
+          </Button>
+          <Button variant="success" onClick={handleWithdraw} disabled={loading}>
+            {loading ? "Processing..." : "Confirm Withdrawal"}
+          </Button>
+        </Modal.Footer>
       </Modal>
+
+      <Modal show={showMembersModal} onHide={() => setShowMembersModal(false)}>
+  <Modal.Header closeButton>
+    <Modal.Title>Goal Members</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    <h5 className="mb-3">{membersCount} members</h5>
+    {goalRole === "admin" && (
+      <Button
+        variant="link"
+        className="d-flex mb-4 p-0 text-primary gap-3 justify-content-center align-items-center"
+        title="Add Member"
+        onClick={() => setShowAddMemberInput((prev) => !prev)}
+        style={{ textDecoration: "none" }}
+      >
+        <div
+          className="rounded-circle d-flex justify-content-center align-items-center"
+          style={{
+            backgroundColor: "#43A047",
+            width: "40px",
+            height: "40px",
+          }}
+        >
+          <i
+            className="bi bi-person-plus"
+            style={{ fontSize: "1.5rem", color: "white" }}
+          ></i>
+        </div>
+        <span style={{ color: "black" }}>Add members</span>
+      </Button>
+    )}
+    {goalRole === "admin" && showAddMemberInput && (
+      <div className="mb-4">
+        <Form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleAddMember();
+          }}
+        >
+          <Form.Group
+            className="d-flex align-items-center"
+            controlId="formAddMember"
+          >
+            <Form.Control
+              type="text"
+              placeholder="Enter member User ID"
+              value={newMember}
+              onChange={(e) => setNewMember(e.target.value)}
+            />
+            <Button variant="primary" type="submit" className="ms-2">
+              Add
+            </Button>
+          </Form.Group>
+        </Form>
+      </div>
+    )}
+    {members.length > 0 ? (
+      <ListGroup>
+        {[...members]
+          .sort((a, b) => {
+            if (a.userId === userId) return -1;
+            if (b.userId === userId) return 1;
+            if (a.goalRole === "admin") return -1;
+            if (b.goalRole === "admin") return 1;
+            return 0;
+          })
+          .map((member, index) => (
+            <ListGroup.Item
+              key={index}
+              className="d-flex justify-content-between align-items-center"
+            >
+              <div>
+                <img
+                  src={
+                    member.profile_picture ||
+                    "https://via.placeholder.com/50"
+                  }
+                  className="rounded-circle"
+                  style={{ width: 60, height: 60, objectFit: "cover" }}
+                />
+                {member.userId === userId ? (
+                  <strong>You</strong>
+                ) : (
+                  <strong>{member.name}</strong>
+                )}
+                <br />
+                <span>Contribution: {member.contribution}</span> <br />
+                <small>
+                  Joined: {new Date(member.joinedAt).toLocaleDateString()}
+                </small>
+              </div>
+              {member.goalRole === "admin" ? (
+                <span
+                  className="badge"
+                  style={{
+                    backgroundColor: "#DCEDC8",
+                    color: "#004d40",
+                    padding: "10px 15px",
+                  }}
+                >
+                  Admin
+                </span>
+              ) : member.userId === userId ? (
+                <Button
+                  variant="outline-danger"
+                  size="sm"
+                  onClick={() => setMemberToRemove(member)}
+                >
+                  Leave
+                </Button>
+              ) : goalRole === "admin" ? (
+                <Button
+                  variant="outline-danger"
+                  size="sm"
+                  onClick={() => setMemberToRemove(member)}
+                >
+                  Remove
+                </Button>
+              ) : null}
+            </ListGroup.Item>
+          ))}
+      </ListGroup>
+    ) : (
+      <p className="text-muted text-center">
+        No members yet. Click the icon to add members.
+      </p>
+    )}
+  </Modal.Body>
+  <Modal show={!!memberToRemove} onHide={() => setMemberToRemove(null)}>
+    <Modal.Header closeButton>
+      <Modal.Title>
+        {memberToRemove?.userId === userId
+          ? "Confirm Leave"
+          : "Confirm Removal"}
+      </Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      Are you sure you want to{" "}
+      {memberToRemove?.userId === userId
+        ? "leave this goal"
+        : `remove ${memberToRemove?.name}`}
+      ?
+    </Modal.Body>
+    <Modal.Footer>
+      <Button variant="secondary" onClick={() => setMemberToRemove(null)}>
+        Cancel
+      </Button>
+      <Button
+        variant="danger"
+        onClick={() =>
+          memberToRemove?.userId === userId
+            ? handleLeaveGoal()
+            : handleRemoveMember(memberToRemove?.userId)
+        }
+      >
+        {memberToRemove?.userId === userId ? "Leave" : "Remove"}
+      </Button>
+    </Modal.Footer>
+  </Modal>
+</Modal>
+
     </Container>
   );
 };

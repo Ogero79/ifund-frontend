@@ -65,7 +65,7 @@ const TwoStepVerification = () => {
       setMessage('');
       setTwoStepEnabled(false);
 
-      const response = await axios.post('http://localhost:5000/api/login/verify-code', {
+      const response = await axios.post('https://newly-bright-chigger.ngrok-free.app/api/login/verify-code', {
         userId,
         verificationCode: code,
       });
@@ -95,7 +95,7 @@ const TwoStepVerification = () => {
   const handleResend = async () => {
     setResendDisabled(true);
     try {
-      await axios.post('http://localhost:5000/api/login/resend-code', { userId });
+      await axios.post('https://newly-bright-chigger.ngrok-free.app/api/login/resend-code', { userId });
       setMessage('A new verification code has been sent to your email.');
       setError('');
     } catch (err) {

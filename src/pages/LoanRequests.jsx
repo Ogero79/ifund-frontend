@@ -4,6 +4,9 @@ import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import Sidebar from "../components/Sidebar";
+import TopNavbar from "../components/TopNavbar";
+
 const LoanRequestsPage = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("authToken");
@@ -18,7 +21,7 @@ const LoanRequestsPage = () => {
   // Fetch pending loan requests
   const fetchLoanRequests = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/superadmin/loan-requests", {
+      const response = await axios.get("https://newly-bright-chigger.ngrok-free.app/superadmin/loan-requests", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -36,7 +39,7 @@ const LoanRequestsPage = () => {
   const handleApproveLoan = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/loans/${selectedLoan.id}/approve`,
+        `https://newly-bright-chigger.ngrok-free.app/loans/${selectedLoan.id}/approve`,
         {},
         {
           headers: {
@@ -57,7 +60,7 @@ const LoanRequestsPage = () => {
   const handleDeclineLoan = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/loans/${selectedLoan.id}/decline`,
+        `https://newly-bright-chigger.ngrok-free.app/loans/${selectedLoan.id}/decline`,
         {},
         {
           headers: {
@@ -93,8 +96,20 @@ const LoanRequestsPage = () => {
     fetchLoanRequests();
   }, [token, role, navigate]);
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
-    <Container className="my-4">
+    <div>
+                    <Sidebar isOpen={isSidebarOpen} />
+      <div className={`main-content ${isSidebarOpen ? "" : "expanded"}`}>
+        <TopNavbar
+          isSidebarOpen={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+        />
       <h2 className="mb-4">Pending Loan Requests</h2>
 
       {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
@@ -211,7 +226,9 @@ const LoanRequestsPage = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </Container>
+    </div>
+    </div>
+
   );
 };
 

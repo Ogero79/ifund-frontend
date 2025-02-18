@@ -53,11 +53,14 @@ const UserHomepage = () => {
     const fetchAccountDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/accounts/${userId}`,
+          `https://newly-bright-chigger.ngrok-free.app/api/accounts/${userId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
           }
         );
+
+        console.log(response.data);
         if (response.data && response.data.account) {
           setBalance(response.data.account.balance);
         } else {
@@ -71,9 +74,10 @@ const UserHomepage = () => {
     const fetchInvestmentPerformance = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/interests/performance/${userId}`,
+          `https://newly-bright-chigger.ngrok-free.app/api/interests/performance/${userId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
           }
         );
         if (response.data && response.data.performance) {
@@ -87,7 +91,6 @@ const UserHomepage = () => {
         setLoading(false);
       }
     };
-    
 
     fetchAccountDetails();
     fetchInvestmentPerformance();
@@ -129,7 +132,6 @@ const UserHomepage = () => {
       </tbody>
     </Table>
   );
-  
 
   if (userName === null || loading) {
     return (
@@ -137,7 +139,14 @@ const UserHomepage = () => {
         className="d-flex justify-content-center align-items-center"
         style={{ height: "100vh" }}
       >
-        <Spinner animation="border" variant="primary" />
+        <Spinner
+          animation="border"
+          role="status"
+          variant="primary"
+          style={{ width: "5rem", height: "5rem" }}
+        >
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
       </div>
     );
   }
@@ -146,7 +155,10 @@ const UserHomepage = () => {
     <Container fluid className="py-4 px-3 px-md-5 px-lg-6 px-xl-7">
       <Header userImage="https://via.placeholder.com/50" userName={userName} />
 
-      <div className="border rounded-5 p-4 mx-auto mb-4 shadow-sm" style={{ maxWidth: "600px" }}>
+      <div
+        className="border rounded-5 p-4 mx-auto mb-4 shadow-sm"
+        style={{ maxWidth: "600px" }}
+      >
         <h3 className="fw-bold fs-2 mb-3">Ksh. {balance}</h3>
         <h5 className="text-muted fs-6">Total Savings</h5>
       </div>
@@ -155,12 +167,37 @@ const UserHomepage = () => {
         <Col xs={12}>
           <div className="d-flex justify-content-between flex-wrap gap-2 mb-4">
             {[
-              { label: "Deposit", icon: <FaArrowUp />, handler: navigationHandlers.openDepositPage, variant: "outline-success" },
-              { label: "Withdraw", icon: <FaArrowDown />, handler: navigationHandlers.openWithdrawPage, variant: "outline-danger" },
-              { label: "Loans", icon: <FaPercent />, handler: navigationHandlers.openLoansPage, variant: "outline-info" },
-              { label: "Invite Friends", icon: <FaUserFriends />, handler: navigationHandlers.openInviteFriendsPage, variant: "outline-primary" },
+              {
+                label: "Deposit",
+                icon: <FaArrowUp />,
+                handler: navigationHandlers.openDepositPage,
+                variant: "outline-success",
+              },
+              {
+                label: "Withdraw",
+                icon: <FaArrowDown />,
+                handler: navigationHandlers.openWithdrawPage,
+                variant: "outline-danger",
+              },
+              {
+                label: "Loans",
+                icon: <FaPercent />,
+                handler: navigationHandlers.openLoansPage,
+                variant: "outline-info",
+              },
+              {
+                label: "Invite Friends",
+                icon: <FaUserFriends />,
+                handler: navigationHandlers.openInviteFriendsPage,
+                variant: "outline-primary",
+              },
             ].map((button, index) => (
-              <Button key={index} variant={button.variant} className="d-flex align-items-center" onClick={button.handler}>
+              <Button
+                key={index}
+                variant={button.variant}
+                className="d-flex align-items-center"
+                onClick={button.handler}
+              >
                 {button.icon} <span className="ms-2">{button.label}</span>
               </Button>
             ))}
@@ -168,7 +205,11 @@ const UserHomepage = () => {
 
           <div className="d-flex justify-content-between align-items-center mb-3">
             <h5>TRANSACTIONS</h5>
-            <Button variant="link" className="p-0" onClick={navigationHandlers.openTransactions}>
+            <Button
+              variant="link"
+              className="p-0"
+              onClick={navigationHandlers.openTransactions}
+            >
               SEE ALL
             </Button>
           </div>
@@ -183,14 +224,18 @@ const UserHomepage = () => {
           <Nav variant="pills" className="flex-wrap mb-3">
             {["3months", "6months", "1year", "2years"].map((key, index) => (
               <Nav.Item key={index}>
-                <Nav.Link eventKey={key}>{key.replace(/(\d)(\w)/, "$1 $2")}</Nav.Link>
+                <Nav.Link eventKey={key}>
+                  {key.replace(/(\d)(\w)/, "$1 $2")}
+                </Nav.Link>
               </Nav.Item>
             ))}
           </Nav>
           <Tab.Content>
             {["3months", "6months", "1year", "2years"].map((key, index) => (
               <Tab.Pane eventKey={key} key={index}>
-                {renderInvestmentTable(investmentData.filter(item => item.period === key))}
+                {renderInvestmentTable(
+                  investmentData.filter((item) => item.period === key)
+                )}
               </Tab.Pane>
             ))}
           </Tab.Content>

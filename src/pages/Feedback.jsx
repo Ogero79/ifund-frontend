@@ -41,7 +41,7 @@ const Feedback = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/feedback",
+        "https://newly-bright-chigger.ngrok-free.app/api/feedback",
         { userId, email, rating, feedback },
         {
           headers: { Authorization: `Bearer ${token}` },

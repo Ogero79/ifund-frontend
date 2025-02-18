@@ -33,11 +33,11 @@ const theme = storedTheme;
 
     const fetchAccountDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/accounts/${userId}`, {
+        const response = await axios.get(`https://newly-bright-chigger.ngrok-free.app/api/accounts/${userId}`, {
           headers: { Authorization: `Bearer ${token}` }, 
         });
         if (response.data && response.data.account) {
-          setBalance(response.data.account.unallocated); 
+          setBalance(response.data.account.balance); 
         } else {
           setBalance("Not Available");
         }
@@ -52,7 +52,7 @@ const theme = storedTheme;
 
   const postNotification = async (message) => {
     try {
-      await fetch("http://localhost:5000/api/notifications", {
+      await fetch("https://newly-bright-chigger.ngrok-free.app/api/notifications", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +89,7 @@ const theme = storedTheme;
 
 
     try {
-      const response = await fetch("http://localhost:5000/api/withdrawals", {
+      const response = await fetch("https://newly-bright-chigger.ngrok-free.app/api/withdrawals", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

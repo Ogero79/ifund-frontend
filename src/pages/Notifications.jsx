@@ -20,7 +20,7 @@ const Notifications = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/notifications/${userId}`);
+        const response = await axios.get(`https://newly-bright-chigger.ngrok-free.app/api/notifications/${userId}`);
         setNotifications(response.data);
       } catch (error) {
         console.error('Error fetching notifications:', error);
@@ -34,7 +34,7 @@ const Notifications = () => {
 
   const markAsRead = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/notifications/${id}/mark-as-read`);
+      await axios.put(`https://newly-bright-chigger.ngrok-free.app/api/notifications/${id}/mark-as-read`);
       setNotifications(notifications.map((n) => (n.id === id ? { ...n, is_read: true } : n)));
     } catch (error) {
       console.error('Error marking as read:', error);
@@ -43,7 +43,7 @@ const Notifications = () => {
 
   const removeNotification = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/notifications/${id}`);
+      await axios.delete(`https://newly-bright-chigger.ngrok-free.app/api/notifications/${id}`);
       setNotifications(notifications.filter((n) => n.id !== id));
     } catch (error) {
       console.error('Error removing notification:', error);

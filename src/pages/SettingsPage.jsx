@@ -34,7 +34,7 @@ const theme = storedTheme;
 
     const fetchAccountDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/accounts/${userId}`, {
+        const response = await axios.get(`https://newly-bright-chigger.ngrok-free.app/api/accounts/${userId}`, {
           headers: { Authorization: `Bearer ${token}` }, 
         });
         if (response.data && response.data.account) {

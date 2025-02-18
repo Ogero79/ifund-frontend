@@ -36,6 +36,9 @@ import LoanRequestsPage from './pages/LoanRequests';
 import InterestsPage from './pages/InterestsPage';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import UserDetails from './pages/UserDetails';
+import Investments from './pages/Investments';
+import Shareholdings from './pages/Shareholdings';
 
 
 
@@ -79,6 +82,10 @@ const App = () => {
         <Route path="/superadmin/interests" element={<InterestsPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/superadmin/user-details/:userId" element={<UserDetails />} />
+        <Route path="/superadmin/investments" element={<Investments />} />
+        <Route path="/superadmin/shareholdings" element={<Shareholdings />} />
+
       </Routes>
     </Router>
   );

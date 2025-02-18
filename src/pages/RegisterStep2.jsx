@@ -44,7 +44,7 @@ const RegisterStep2 = () => {
   
     try {
       setLoading(true);
-      const response = await axios.post('http://localhost:5000/api/register/step2', formData, {
+      const response = await axios.post('https://newly-bright-chigger.ngrok-free.app/api/register/step2', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -70,21 +70,11 @@ const RegisterStep2 = () => {
 
   return (
     <>
-      <div className="position-absolute top-0 left-0 p-4">
-        <h1
-          style={{
-            maxWidth: '150px',
-            color: '#1FC17B',
-            fontFamily: 'Playwrite AU QLD Guides',
-            fontWeight: 600,
-            fontSize: '52px',
-          }}
-        >
-          iFund
-        </h1>
-      </div>
       <div className="d-flex align-items-center justify-content-center" style={{ height: '100vh' }}>
         <div className="w-100" style={{ maxWidth: '600px', padding: '2rem', backgroundColor: '#f8f9fa', borderRadius: '8px' }}>
+        <div className="text-center">
+          <h1 style={{ color: '#1FC17B', fontWeight: 700, fontSize: '36px' }}>iFund</h1>
+        </div>
           <h2 className="text-center mb-4">Register - Step 2: Upload Your ID</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>

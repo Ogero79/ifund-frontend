@@ -30,7 +30,7 @@ const theme = storedTheme;
 
     const fetchReferrals = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/referrals/${userId}`, {
+        const response = await axios.get(`https://newly-bright-chigger.ngrok-free.app/api/referrals/${userId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -60,7 +60,7 @@ const theme = storedTheme;
     const amount = unredeemedRewards;
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/add-to-savings`,
+        `https://newly-bright-chigger.ngrok-free.app/api/add-to-savings`,
         { userId, amount },
         {
           headers: { Authorization: `Bearer ${token}` },

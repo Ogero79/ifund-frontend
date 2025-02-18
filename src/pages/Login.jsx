@@ -25,7 +25,7 @@ const Login = () => {
     try {
       setLoading(true);
       setError('');
-      const response = await axios.post('http://localhost:5000/api/login', {
+      const response = await axios.post('https://newly-bright-chigger.ngrok-free.app/api/login', {
         email: formData.email,
         password: formData.password,
       });

@@ -38,7 +38,7 @@ const theme = storedTheme;
   
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/support',
+        'https://newly-bright-chigger.ngrok-free.app/api/support',
         { userId, email, message },
         {
           headers: { Authorization: `Bearer ${token}` },

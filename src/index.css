@@ -11,6 +11,7 @@
 body {
   color: #333;
   line-height: 1.6;
+  background: #fff;
 }
 
 /* Global styles for light and dark themes */
@@ -64,5 +65,111 @@ body.dark .modal{
 
 ::-webkit-scrollbar-corner {
   background: #f1f1f1;
+}
+
+/* General Styling */
+.ifund-body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Navbar */
+.ifund-navbar {
+  background-color: white;
+  padding: 15px 20px;
+}
+
+.ifund-logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #28a745;
+}
+
+.ifund-nav-links .nav-link {
+  font-weight: 500;
+  color: #333;
+}
+
+.ifund-nav-links .nav-link:hover {
+  color: #28a745;
+}
+
+/* Hero Section */
+.ifund-hero {
+  background: linear-gradient(to right, #e3f2fd, #ffffff);
+  padding: 80px 0;
+}
+
+.ifund-hero-img {
+  max-width: 500px;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Features Section */
+.ifund-features {
+  padding: 60px 0;
+  background-color: #fff;
+}
+
+.ifund-card {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.ifund-card:hover {
+  transform: translateY(-10px);
+}
+
+.ifund-icon {
+  font-size: 40px;
+  color: #28a745;
+}
+
+/* About Section */
+.ifund-about, .ifund-help {
+  padding: 60px 0;
+  background-color: #f1f8e9;
+}
+
+/* Footer */
+.ifund-footer {
+  background-color: #343a40;
+  color: white;
+  padding: 20px 0;
+}
+
+.ifund-footer-links a {
+  color: white;
+  margin: 0 10px;
+}
+
+.ifund-footer-links a:hover {
+  color: #28a745;
+}
+
+.ifund-social-icons svg {
+  font-size: 24px;
+  margin: 0 8px;
+  cursor: pointer;
+  color: white;
+}
+
+.ifund-social-icons svg:hover {
+  color: #28a745;
+}
+
+/* Scroll Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 

@@ -37,11 +37,11 @@ const AddSavingGoalPage = () => {
 
     const fetchAccountDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/accounts/${userId}`, {
+        const response = await axios.get(`https://newly-bright-chigger.ngrok-free.app/api/accounts/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.data && response.data.account) {
-          setBalance(response.data.account.unallocated);
+          setBalance(response.data.account.balance);
         } else {
           setBalance("Not Available");
         }
@@ -57,7 +57,7 @@ const AddSavingGoalPage = () => {
 
   const postNotification = async (message) => {
     try {
-      await fetch("http://localhost:5000/api/notifications", {
+      await fetch("https://newly-bright-chigger.ngrok-free.app/api/notifications", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,6 +89,13 @@ const AddSavingGoalPage = () => {
       return;
     }
 
+    if (depositAmount > newGoal.target) {
+      setAlertMessage("Deposit cannot be above the target amount.");
+      setShowAlert(true);
+      return;
+    }
+
+
     const formData = new FormData();
     formData.append("user_id", userId);
     formData.append("title", newGoal.title);
@@ -102,7 +109,7 @@ const AddSavingGoalPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/goals",
+        "https://newly-bright-chigger.ngrok-free.app/api/goals",
         formData,
         {
           headers: {
@@ -151,7 +158,7 @@ const AddSavingGoalPage = () => {
           <Form>
             <Row className="mb-3">
               <Col xs={12}>
-                <h5>Unallocated Balance: {balance !== null ? `KES ${balance}` : "Loading..."}</h5>
+                <h5>Balance: {balance !== null ? `KES ${balance}` : "Loading..."}</h5>
               </Col>
             </Row>
             <Row>

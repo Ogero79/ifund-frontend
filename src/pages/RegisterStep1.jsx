@@ -41,7 +41,7 @@ const RegisterStep1 = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post("http://localhost:5000/api/register/step1", {
+      const response = await axios.post("https://newly-bright-chigger.ngrok-free.app/api/register/step1", {
         full_name: formData.fullName,
         email: formData.email,
         phone: formData.phone,
@@ -65,19 +65,6 @@ const RegisterStep1 = () => {
 
   return (
     <>
-      <div className="position-absolute top-0 left-0 p-4">
-        <h1
-          style={{
-            maxWidth: "150px",
-            color: "#1FC17B",
-            fontFamily: "Playwrite AU QLD Guides",
-            fontWeight: 600,
-            fontSize: "52px",
-          }}
-        >
-          iFund
-        </h1>
-      </div>
       <div
         className="d-flex justify-content-center align-items-start"
         style={{ minHeight: "100vh", marginTop: "150px" }}
@@ -91,6 +78,9 @@ const RegisterStep1 = () => {
             borderRadius: "8px",
           }}
         >
+                  <div className="text-center">
+          <h1 style={{ color: '#1FC17B', fontWeight: 700, fontSize: '36px' }}>iFund</h1>
+        </div>
           <h2 className="text-center mb-4">
             Register - Step 1: Personal Information
           </h2>

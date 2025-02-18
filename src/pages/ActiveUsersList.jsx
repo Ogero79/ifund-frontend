@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import AdminNavbar from "../components/AdminNavbar";
+import Sidebar from "../components/Sidebar";
+import TopNavbar from "../components/TopNavbar";
 import { Spinner } from "react-bootstrap";
 
 const ActiveUsersList = () => {
@@ -22,7 +23,7 @@ const ActiveUsersList = () => {
         setLoading(true);
         setError(null);
         const response = await axios.get(
-          "http://localhost:5000/superadmin/active-users",
+          "https://newly-bright-chigger.ngrok-free.app/superadmin/active-users",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -42,9 +43,20 @@ const ActiveUsersList = () => {
     fetchActiveUsersData();
   }, [token, role, navigate]);
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div>
-      <AdminNavbar />
+                      <Sidebar isOpen={isSidebarOpen} />
+      <div className={`main-content ${isSidebarOpen ? "" : "expanded"}`}>
+        <TopNavbar
+          isSidebarOpen={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+        />
 
       {loading && (
         <div
@@ -98,6 +110,7 @@ const ActiveUsersList = () => {
           )}
         </div>
       )}
+      </div>
     </div>
   );
 };

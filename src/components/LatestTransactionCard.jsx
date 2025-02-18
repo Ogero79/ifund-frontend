@@ -10,7 +10,7 @@ const LatestTransactionCard = () => {
   useEffect(() => {
     const fetchLatestTransaction = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/transactions/${userId}`);
+        const response = await fetch(`https://newly-bright-chigger.ngrok-free.app/api/transactions/${userId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch transactions');
         }
