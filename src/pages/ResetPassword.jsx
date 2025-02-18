@@ -24,7 +24,7 @@ const ResetPassword = () => {
     setError('');
 
     try {
-      await axios.post(`https://newly-bright-chigger.ngrok-free.app/api/reset-password/${token}`, { password });
+      await axios.post(`https://ifund-backend.onrender.com/api/reset-password/${token}`, { password });
       setMessage('Password reset successful. Redirecting to login...');
       setTimeout(() => navigate('/login'), 3000);
     } catch (err) {

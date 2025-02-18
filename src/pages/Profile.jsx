@@ -27,7 +27,7 @@ const ProfilePage = () => {
   const fetchUserDetails = async () => {
     try {
       const response = await axios.get(
-        `https://newly-bright-chigger.ngrok-free.app/api/profiles/${userId}`,
+        `https://ifund-backend.onrender.com/api/profiles/${userId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -47,7 +47,7 @@ const ProfilePage = () => {
     const fetchUserDetails = async () => {
       try {
         const response = await axios.get(
-          `https://newly-bright-chigger.ngrok-free.app/api/profiles/${userId}`,
+          `https://ifund-backend.onrender.com/api/profiles/${userId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -83,7 +83,7 @@ const ProfilePage = () => {
 
     try {
       const response = await axios.put(
-        `https://newly-bright-chigger.ngrok-free.app/api/profiles/${userId}/edit`,
+        `https://ifund-backend.onrender.com/api/profiles/${userId}/edit`,
         formData,
         {
           headers: {

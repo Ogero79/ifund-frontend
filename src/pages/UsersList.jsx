@@ -25,7 +25,7 @@ const UsersList = () => {
         setLoading(true);
         setError(null);
         const response = await axios.get(
-          "https://newly-bright-chigger.ngrok-free.app/superadmin/users",
+          "https://ifund-backend.onrender.com/superadmin/users",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -51,7 +51,7 @@ const UsersList = () => {
   const handleSaveChanges = async () => {
     try {
       await axios.put(
-        `https://newly-bright-chigger.ngrok-free.app/superadmin/users/${selectedUser.user_id}`,
+        `https://ifund-backend.onrender.com/superadmin/users/${selectedUser.user_id}`,
         {
           full_name: selectedUser.full_name,
           email: selectedUser.email,

@@ -38,7 +38,7 @@ const theme = storedTheme;
   
     try {
       const response = await axios.post(
-        'https://newly-bright-chigger.ngrok-free.app/api/support',
+        'https://ifund-backend.onrender.com/api/support',
         { userId, email, message },
         {
           headers: { Authorization: `Bearer ${token}` },

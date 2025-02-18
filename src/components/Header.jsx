@@ -19,7 +19,7 @@ const Header = ({ userName }) => {
 
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get(`https://newly-bright-chigger.ngrok-free.app/api/profiles/${userId}`, {
+        const response = await axios.get(`https://ifund-backend.onrender.com/api/profiles/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(response.data);

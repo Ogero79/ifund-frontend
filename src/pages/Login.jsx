@@ -25,7 +25,7 @@ const Login = () => {
     try {
       setLoading(true);
       setError('');
-      const response = await axios.post('https://newly-bright-chigger.ngrok-free.app/api/login', {
+      const response = await axios.post('https://ifund-backend.onrender.com/api/login', {
         email: formData.email,
         password: formData.password,
       });

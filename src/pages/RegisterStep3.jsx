@@ -41,7 +41,7 @@ const RegisterStep3 = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post('https://newly-bright-chigger.ngrok-free.app/api/register/step3', payload);
+      const response = await axios.post('https://ifund-backend.onrender.com/api/register/step3', payload);
       
 
       if (response.status === 200 || response.status === 201) {

@@ -10,7 +10,7 @@ const LatestTransactionCard = () => {
   useEffect(() => {
     const fetchLatestTransaction = async () => {
       try {
-        const response = await fetch(`https://newly-bright-chigger.ngrok-free.app/api/transactions/${userId}`);
+        const response = await fetch(`https://ifund-backend.onrender.com/api/transactions/${userId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch transactions');
         }

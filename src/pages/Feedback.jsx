@@ -41,7 +41,7 @@ const Feedback = () => {
 
     try {
       const response = await axios.post(
-        "https://newly-bright-chigger.ngrok-free.app/api/feedback",
+        "https://ifund-backend.onrender.com/api/feedback",
         { userId, email, rating, feedback },
         {
           headers: { Authorization: `Bearer ${token}` },

@@ -21,7 +21,7 @@ const LoanRequestsPage = () => {
   // Fetch pending loan requests
   const fetchLoanRequests = async () => {
     try {
-      const response = await axios.get("https://newly-bright-chigger.ngrok-free.app/superadmin/loan-requests", {
+      const response = await axios.get("https://ifund-backend.onrender.com/superadmin/loan-requests", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -39,7 +39,7 @@ const LoanRequestsPage = () => {
   const handleApproveLoan = async () => {
     try {
       const response = await axios.put(
-        `https://newly-bright-chigger.ngrok-free.app/loans/${selectedLoan.id}/approve`,
+        `https://ifund-backend.onrender.com/loans/${selectedLoan.id}/approve`,
         {},
         {
           headers: {
@@ -60,7 +60,7 @@ const LoanRequestsPage = () => {
   const handleDeclineLoan = async () => {
     try {
       const response = await axios.put(
-        `https://newly-bright-chigger.ngrok-free.app/loans/${selectedLoan.id}/decline`,
+        `https://ifund-backend.onrender.com/loans/${selectedLoan.id}/decline`,
         {},
         {
           headers: {

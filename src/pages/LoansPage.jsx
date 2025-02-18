@@ -77,7 +77,7 @@ const LoansPage = () => {
 
   const fetchLoanData = async () => {
     try {
-      const response = await fetch(`https://newly-bright-chigger.ngrok-free.app/api/loan/${userId}`, {
+      const response = await fetch(`https://ifund-backend.onrender.com/api/loan/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -103,7 +103,7 @@ const LoansPage = () => {
 
     const fetchAccountDetails = async () => {
       try {
-        const response = await axios.get(`https://newly-bright-chigger.ngrok-free.app/api/accounts/${userId}`, {
+        const response = await axios.get(`https://ifund-backend.onrender.com/api/accounts/${userId}`, {
           headers: { Authorization: `Bearer ${token}` }, 
         });
         if (response.data && response.data.account) {
@@ -130,7 +130,7 @@ const LoansPage = () => {
     }
 
     try {
-      const response = await fetch("https://newly-bright-chigger.ngrok-free.app/api/loans/borrow", {
+      const response = await fetch("https://ifund-backend.onrender.com/api/loans/borrow", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -176,7 +176,7 @@ const LoansPage = () => {
     }
 
     try {
-      const response = await fetch(`https://newly-bright-chigger.ngrok-free.app/loans/${activeLoan.id}/repay`, {
+      const response = await fetch(`https://ifund-backend.onrender.com/loans/${activeLoan.id}/repay`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

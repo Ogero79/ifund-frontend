@@ -24,7 +24,7 @@ const Shareholdings = () => {
         setLoading(true);
         setError(null);
         const response = await axios.get(
-          "https://newly-bright-chigger.ngrok-free.app/superadmin/totals",
+          "https://ifund-backend.onrender.com/superadmin/totals",
           {
             headers: { Authorization: `Bearer ${token}` },
           }

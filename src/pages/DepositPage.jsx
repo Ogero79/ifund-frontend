@@ -47,7 +47,7 @@ const DepositPage = () => {
 
   const postNotification = async (message) => {
     try {
-      await fetch("https://newly-bright-chigger.ngrok-free.app/api/notifications", {
+      await fetch("https://ifund-backend.onrender.com/api/notifications", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -85,7 +85,7 @@ const DepositPage = () => {
       // Format the phone number before sending to the API (replace first 0 with 254)
       const formattedPhoneNumber = depositDetails.mpesaNumber.replace(/^0/, "254");
 
-      const response = await fetch("https://newly-bright-chigger.ngrok-free.app/api/deposits", {
+      const response = await fetch("https://ifund-backend.onrender.com/api/deposits", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

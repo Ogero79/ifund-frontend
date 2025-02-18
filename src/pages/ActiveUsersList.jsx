@@ -23,7 +23,7 @@ const ActiveUsersList = () => {
         setLoading(true);
         setError(null);
         const response = await axios.get(
-          "https://newly-bright-chigger.ngrok-free.app/superadmin/active-users",
+          "https://ifund-backend.onrender.com/superadmin/active-users",
           {
             headers: { Authorization: `Bearer ${token}` },
           }

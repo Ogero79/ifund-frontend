@@ -15,7 +15,7 @@ const InterestsPage = () => {
 
   const fetchLastUpdate = async () => {
     try {
-      const response = await axios.get("https://newly-bright-chigger.ngrok-free.app/api/interests/last-update", {
+      const response = await axios.get("https://ifund-backend.onrender.com/api/interests/last-update", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -41,7 +41,7 @@ const InterestsPage = () => {
     setShowModal(false);
 
     try {
-      const response = await axios.post("https://newly-bright-chigger.ngrok-free.app/api/interests/update", {}, {
+      const response = await axios.post("https://ifund-backend.onrender.com/api/interests/update", {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert(response.data.message);

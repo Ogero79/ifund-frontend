@@ -37,7 +37,7 @@ const AddSavingGoalPage = () => {
 
     const fetchAccountDetails = async () => {
       try {
-        const response = await axios.get(`https://newly-bright-chigger.ngrok-free.app/api/accounts/${userId}`, {
+        const response = await axios.get(`https://ifund-backend.onrender.com/api/accounts/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.data && response.data.account) {
@@ -57,7 +57,7 @@ const AddSavingGoalPage = () => {
 
   const postNotification = async (message) => {
     try {
-      await fetch("https://newly-bright-chigger.ngrok-free.app/api/notifications", {
+      await fetch("https://ifund-backend.onrender.com/api/notifications", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -109,7 +109,7 @@ const AddSavingGoalPage = () => {
 
     try {
       const response = await axios.post(
-        "https://newly-bright-chigger.ngrok-free.app/api/goals",
+        "https://ifund-backend.onrender.com/api/goals",
         formData,
         {
           headers: {

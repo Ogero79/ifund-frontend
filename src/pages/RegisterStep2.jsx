@@ -44,7 +44,7 @@ const RegisterStep2 = () => {
   
     try {
       setLoading(true);
-      const response = await axios.post('https://newly-bright-chigger.ngrok-free.app/api/register/step2', formData, {
+      const response = await axios.post('https://ifund-backend.onrender.com/api/register/step2', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

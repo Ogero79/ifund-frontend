@@ -62,7 +62,7 @@ const GoalDetailPage = () => {
       }
 
       const response = await axios.get(
-        `https://newly-bright-chigger.ngrok-free.app/api/goal/${goalId}`,
+        `https://ifund-backend.onrender.com/api/goal/${goalId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -111,7 +111,7 @@ const GoalDetailPage = () => {
   const handleDeleteGoal = async () => {
     try {
       const response = await fetch(
-        `https://newly-bright-chigger.ngrok-free.app/api/goals/${goalId}/delete`,
+        `https://ifund-backend.onrender.com/api/goals/${goalId}/delete`,
         {
           method: "DELETE",
         }
@@ -143,7 +143,7 @@ const GoalDetailPage = () => {
         }
 
         const response = await axios.get(
-          `https://newly-bright-chigger.ngrok-free.app/api/goal/${goalId}`,
+          `https://ifund-backend.onrender.com/api/goal/${goalId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -191,7 +191,7 @@ const GoalDetailPage = () => {
     const fetchAccountDetails = async () => {
       try {
         const response = await axios.get(
-          `https://newly-bright-chigger.ngrok-free.app/api/accounts/${userId}`,
+          `https://ifund-backend.onrender.com/api/accounts/${userId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -223,7 +223,7 @@ const GoalDetailPage = () => {
 
     try {
       const response = await axios.put(
-        `https://newly-bright-chigger.ngrok-free.app/api/goals/${goalId}`,
+        `https://ifund-backend.onrender.com/api/goals/${goalId}`,
         formData,
         {
           headers: {
@@ -249,7 +249,7 @@ const GoalDetailPage = () => {
 
     try {
       const response = await axios.post(
-        `https://newly-bright-chigger.ngrok-free.app/api/goals/${goalId}/members`,
+        `https://ifund-backend.onrender.com/api/goals/${goalId}/members`,
         { userId: newMember },
         {
           headers: {
@@ -312,7 +312,7 @@ const GoalDetailPage = () => {
 
     try {
       const response = await axios.post(
-        `https://newly-bright-chigger.ngrok-free.app/api/goals/${goal.goal_id}/contribute`,
+        `https://ifund-backend.onrender.com/api/goals/${goal.goal_id}/contribute`,
         {
           userId: localStorage.getItem("userId"),
           contributionAmount,
@@ -361,7 +361,7 @@ const GoalDetailPage = () => {
   const handleRemoveMember = async (userId) => {
     try {
       const response = await axios.delete(
-        `https://newly-bright-chigger.ngrok-free.app/api/goals/${goalId}/members/${userId}`,
+        `https://ifund-backend.onrender.com/api/goals/${goalId}/members/${userId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -383,7 +383,7 @@ const GoalDetailPage = () => {
   const handleLeaveGoal = async () => {
     try {
       const response = await axios.delete(
-        `https://newly-bright-chigger.ngrok-free.app/api/goals/${goalId}/members/${userId}`,
+        `https://ifund-backend.onrender.com/api/goals/${goalId}/members/${userId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -427,7 +427,7 @@ const GoalDetailPage = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        `https://newly-bright-chigger.ngrok-free.app/api/goal/${goalId}/withdraw`,
+        `https://ifund-backend.onrender.com/api/goal/${goalId}/withdraw`,
         {
           amount: withdrawAmount,
           userId,

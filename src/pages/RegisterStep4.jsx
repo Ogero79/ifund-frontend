@@ -56,7 +56,7 @@ const RegisterStep4 = () => {
 
     try {
       setLoading(true); 
-      const response = await axios.post('https://newly-bright-chigger.ngrok-free.app/api/register/step4', { userId, verificationCode: code });
+      const response = await axios.post('https://ifund-backend.onrender.com/api/register/step4', { userId, verificationCode: code });
 
       if (response.status === 200 || response.status === 201) {
         window.open('/login', '_blank');
@@ -73,7 +73,7 @@ const RegisterStep4 = () => {
   const handleResend = async () => {
     setResendDisabled(true);
     try {
-      await axios.post('https://newly-bright-chigger.ngrok-free.app/api/login/resend-code', { userId });
+      await axios.post('https://ifund-backend.onrender.com/api/login/resend-code', { userId });
       setError('A new verification code has been sent to your email.');
     } catch (err) {
       console.error('Error resending code:', err);

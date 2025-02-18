@@ -41,7 +41,7 @@ const RegisterStep1 = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post("https://newly-bright-chigger.ngrok-free.app/api/register/step1", {
+      const response = await axios.post("https://ifund-backend.onrender.com/api/register/step1", {
         full_name: formData.fullName,
         email: formData.email,
         phone: formData.phone,

@@ -47,7 +47,7 @@ const Account = () => {
 
     try {
       const response = await axios.put(
-        `https://newly-bright-chigger.ngrok-free.app/api/users/${userId}/change-password`,
+        `https://ifund-backend.onrender.com/api/users/${userId}/change-password`,
         {
           currentPassword,
           newPassword,
@@ -76,7 +76,7 @@ const Account = () => {
 
     try {
       const response = await axios.post(
-        `https://newly-bright-chigger.ngrok-free.app/api/users/${userId}/request-info`,
+        `https://ifund-backend.onrender.com/api/users/${userId}/request-info`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -100,7 +100,7 @@ const Account = () => {
 
     try {
       const response = await axios.put(
-        `https://newly-bright-chigger.ngrok-free.app/api/accounts/${userId}/toggle-two-step`,
+        `https://ifund-backend.onrender.com/api/accounts/${userId}/toggle-two-step`,
         {
           twoStepEnabled: !userDetails.twoStepEnabled,
         },
@@ -132,7 +132,7 @@ const Account = () => {
 
     try {
       const response = await axios.put(
-        `https://newly-bright-chigger.ngrok-free.app/api/users/${userId}/request-delete`,
+        `https://ifund-backend.onrender.com/api/users/${userId}/request-delete`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },

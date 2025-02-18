@@ -77,7 +77,7 @@ const SavingsPage = () => {
         setLoading(true);
         setError(null);
         const response = await axios.get(
-          `https://newly-bright-chigger.ngrok-free.app/api/goals/${userId}`,
+          `https://ifund-backend.onrender.com/api/goals/${userId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

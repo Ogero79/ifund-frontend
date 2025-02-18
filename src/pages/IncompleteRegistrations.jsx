@@ -23,7 +23,7 @@ const IncompleteRegistrations = () => {
         setLoading(true);
         setError(null);
         const response = await axios.get(
-          "https://newly-bright-chigger.ngrok-free.app/superadmin/incomplete-registrations",
+          "https://ifund-backend.onrender.com/superadmin/incomplete-registrations",
           {
             headers: { Authorization: `Bearer ${token}` },
           }

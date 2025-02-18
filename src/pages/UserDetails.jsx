@@ -28,7 +28,7 @@ const UserDetails = () => {
     const fetchUserDetails = async () => {
       try {
         const response = await axios.get(
-          `https://newly-bright-chigger.ngrok-free.app/api/superadmin/user-details/${userId}`,
+          `https://ifund-backend.onrender.com/api/superadmin/user-details/${userId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -57,7 +57,7 @@ const UserDetails = () => {
     const fetchUserDetails = async () => {
       try {
         const response = await axios.get(
-          `https://newly-bright-chigger.ngrok-free.app/api/superadmin/user-details/${userId}`,
+          `https://ifund-backend.onrender.com/api/superadmin/user-details/${userId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -83,7 +83,7 @@ const UserDetails = () => {
   const handleEditUser = async () => {
     try {
       await axios.put(
-        `https://newly-bright-chigger.ngrok-free.app/superadmin/users/${user.user_id}`,
+        `https://ifund-backend.onrender.com/superadmin/users/${user.user_id}`,
         {
           full_name: editUser.full_name,
           email: editUser.email,
