@@ -89,73 +89,134 @@ const UserDetails = () => {
     <Container className="py-4">
       <h2>User Details</h2>
       <Card>
-        <Card.Body>
-          <Form>
-            <Row>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={editUser.full_name}
-                    onChange={(e) =>
-                      setEditUser({ ...editUser, full_name: e.target.value })
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    value={editUser.email}
-                    onChange={(e) =>
-                      setEditUser({ ...editUser, email: e.target.value })
-                    }
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Phone</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={editUser.phone}
-                    onChange={(e) =>
-                      setEditUser({ ...editUser, phone: e.target.value })
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Balance</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={editUser.balance}
-                    onChange={(e) =>
-                      setEditUser({ ...editUser, balance: e.target.value })
-                    }
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Button variant="primary" onClick={handleEditUser}>
-              Save Changes
-            </Button>
-            <Button
-              variant="danger"
-              className="ms-3"
-              onClick={() => setShowDeleteModal(true)}
-            >
-              Delete User
-            </Button>
-          </Form>
-        </Card.Body>
-      </Card>
+  <Card.Body>
+    <Form>
+      <Row>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type="text"
+              value={editUser.full_name}
+              onChange={(e) =>
+                setEditUser({ ...editUser, full_name: e.target.value })
+              }
+            />
+          </Form.Group>
+        </Col>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>User ID</Form.Label>
+            <Form.Control
+              type="text"
+              value={user.user_id}
+              disabled
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="email"
+              value={editUser.email}
+              onChange={(e) =>
+                setEditUser({ ...editUser, email: e.target.value })
+              }
+            />
+          </Form.Group>
+        </Col>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Phone</Form.Label>
+            <Form.Control
+              type="text"
+              value={editUser.phone}
+              onChange={(e) =>
+                setEditUser({ ...editUser, phone: e.target.value })
+              }
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Balance</Form.Label>
+            <Form.Control
+              type="text"
+              value={editUser.balance}
+              onChange={(e) =>
+                setEditUser({ ...editUser, balance: e.target.value })
+              }
+            />
+          </Form.Group>
+        </Col>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Loan Limit</Form.Label>
+            <Form.Control
+              type="number"
+              value={editUser.loan_limit}
+              onChange={(e) =>
+                setEditUser({ ...editUser, loan_limit: e.target.value })
+              }
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Front ID</Form.Label>
+            <img
+              src={user.front_id_path || "https://via.placeholder.com/150"}
+              alt="Front ID"
+              className="rounded"
+              style={{
+                objectFit: "cover",
+                maxHeight: "250px",
+                height: "auto",
+                width: "100%",
+                border: "2px solid #ddd",
+              }}
+            />
+          </Form.Group>
+        </Col>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Back ID</Form.Label>
+            <img
+              src={user.back_id_path || "https://via.placeholder.com/150"}
+              alt="Back ID"
+              className="rounded"
+              style={{
+                objectFit: "cover",
+                maxHeight: "250px",
+                height: "auto",
+                width: "100%",
+                border: "2px solid #ddd",
+              }}
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+      <Button variant="primary" onClick={handleEditUser}>
+        Save Changes
+      </Button>
+      <Button
+        variant="danger"
+        className="ms-3"
+        onClick={() => setShowDeleteModal(true)}
+      >
+        Delete User
+      </Button>
+    </Form>
+  </Card.Body>
+</Card>
+
 
       {/* Delete Confirmation Modal */}
       <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
