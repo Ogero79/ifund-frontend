@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
-import { Button, Form, Alert, Spinner } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
+import { Button, Form, Alert, Spinner } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
-  const [error, setError] = useState('');
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isVerificationStep, setIsVerificationStep] = useState(false);
+    const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -18,48 +20,76 @@ const Login = () => {
     e.preventDefault();
 
     if (!formData.email || !formData.password) {
-      setError('Please enter your email and password.');
+      setError("Please enter your email and password.");
       return;
     }
 
     try {
       setLoading(true);
-      setError('');
+      setError("");
       const response = await axios.post(
-        'https://ifund-backend.onrender.com/api/login',
+        "https://ifund-backend.onrender.com/api/login",
         {
           email: formData.email,
           password: formData.password,
         },
         {
           headers: {
-            'Content-Type': 'application/json',  // Ensure JSON content is set
+            "Content-Type": "application/json", // Ensure JSON content is set
           },
-          withCredentials: true,  // Ensure cookies or credentials are included in the request
+          withCredentials: true, // Ensure cookies or credentials are included in the request
         }
       );
-      const { token, user } = response.data;
+      const { token, user, verificationRequired, userId, registrationIncomplete, nextStep } = response.data;
 
-      localStorage.setItem('authToken', token);
-      localStorage.setItem('userName', user.name);
-      localStorage.setItem('userId', user.id);
-      localStorage.setItem('userRole', user.role);
+      if (registrationIncomplete) {
 
-      navigate(user.role === 'superadmin' ? '/admin/dashboard' : '/user/home', { state: { userName: user.name } });
-
+        setUserId(userId);
+        localStorage.setItem('userId', userId);
+        navigate(`/register/${nextStep}`);
+      } else if (verificationRequired) {
+        setIsVerificationStep(true);
+        setUserId(userId);
+        localStorage.setItem('userId', userId);
+        navigate('/verify-code');
+      } else {
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('userName', user.name);
+        localStorage.setItem('userId', user.id);
+        localStorage.setItem('userRole', user.role);
+        
+        if (user.role === 'superadmin') {
+          navigate('/admin/dashboard', { state: { userName: user.name } });
+        } else if (user.role === 'user') {
+          navigate('/user/home', { state: { userName: user.name } });
+        } else {
+          setError('Unknown user role. Please contact support.');
+        }
+      }
     } catch (error) {
-      console.error('Login Error:', error);
-      setError(error.response?.data?.message || 'An error occurred while logging in. Please try again.');
+      console.error("Login Error:", error);
+      setError(
+        error.response?.data?.message ||
+          "An error occurred while logging in. Please try again."
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh', backgroundColor: '#f4f6f9' }}>
-      <div className="card shadow-sm p-4" style={{ maxWidth: '400px', width: '100%', borderRadius: '12px' }}>
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{ minHeight: "100vh", backgroundColor: "#f4f6f9" }}
+    >
+      <div
+        className="card shadow-sm p-4"
+        style={{ maxWidth: "400px", width: "100%", borderRadius: "12px" }}
+      >
         <div className="text-center">
-          <h1 style={{ color: '#1FC17B', fontWeight: 700, fontSize: '36px' }}>iFund</h1>
+          <h1 style={{ color: "#1FC17B", fontWeight: 700, fontSize: "36px" }}>
+            iFund
+          </h1>
         </div>
         <h2 className="text-center mt-3 mb-4">Login</h2>
 
@@ -92,7 +122,14 @@ const Login = () => {
 
           {/* Forgot Password Link */}
           <div className="text-end mb-3">
-            <a href="/forgot-password" style={{ color: '#1FC17B', fontSize: '14px', textDecoration: 'none' }}>
+            <a
+              href="/forgot-password"
+              style={{
+                color: "#1FC17B",
+                fontSize: "14px",
+                textDecoration: "none",
+              }}
+            >
               Forgot Password?
             </a>
           </div>
@@ -100,21 +137,34 @@ const Login = () => {
           <Button
             type="submit"
             className="w-100"
-            style={{ backgroundColor: '#1FC17B', borderColor: '#1FC17B' }}
+            style={{ backgroundColor: "#1FC17B", borderColor: "#1FC17B" }}
             disabled={loading}
           >
             {loading ? (
-              <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
             ) : (
-              'Login'
+              "Login"
             )}
           </Button>
         </Form>
 
         {/* Sign-up Link */}
         <p className="text-center mt-3">
-          Don't have an account?{' '}
-          <a href="/register/step-1" style={{ color: '#1FC17B', fontWeight: 'bold', textDecoration: 'none' }}>
+          Don't have an account?{" "}
+          <a
+            href="/register/step-1"
+            style={{
+              color: "#1FC17B",
+              fontWeight: "bold",
+              textDecoration: "none",
+            }}
+          >
             Sign up here
           </a>
         </p>
