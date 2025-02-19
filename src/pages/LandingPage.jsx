@@ -43,91 +43,153 @@ const LandingPage = () => {
 
   return (
     <div className="container-fluid p-0">
-      {/* Background Wrapper */}
-      <div style={{
-  background: "linear-gradient(135deg, #ECF0F3, #ffffff)", 
-  minHeight: "100vh",
-  paddingBottom: "50px"
-}}>
+{/* Background Wrapper */}
+<div
+  style={{
+    background: "linear-gradient(135deg, #ECF0F3, #ffffff)",
+    minHeight: "100vh",
+    paddingBottom: "50px",
+  }}
+>
   {/* Navigation Bar */}
-  <nav 
-    className="navbar navbar-expand-lg navbar-light py-3 px-4 position-absolute w-100" 
+  <nav
+    className="navbar navbar-expand-lg navbar-light py-3 px-4 w-100"
     style={{
-      zIndex: 10,
       backgroundColor: "transparent", /* Transparent by default */
     }}
   >
     <div className="container">
+      {/* Brand Label for Mobile */}
       <a className="navbar-brand fw-bold fs-3 text-success" href="#">
         iFund
       </a>
       <button
         className="navbar-toggler"
         type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasNavbar"
+        aria-controls="offcanvasNavbar"
       >
         <span className="navbar-toggler-icon"></span>
       </button>
-      <div
-        className="collapse navbar-collapse justify-content-between"
-        id="navbarNav"
-        style={{
-          backgroundColor: "transparent", /* Ensure it stays transparent by default */
-        }}
-      >
-        <ul className="navbar-nav mx-auto gap-4">
-          <li className="nav-item">
-            <a className="nav-link fw-medium" href="#features">
-              Features
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link fw-medium" href="#testimonials">
-              Testimonials
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link fw-medium" href="#how-it-works">
-              About
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link fw-medium" href="#need-help">
-              FAQs
-            </a>
-          </li>
-        </ul>
-        <div className="d-flex">
-          <button
-            className="btn btn-outline-success me-2 rounded-pill px-3"
-            onClick={() => navigate("/login")}
-          >
-            Login
-          </button>
-          <button
-            className="btn btn-success rounded-pill px-4"
-            onClick={() => navigate("/register/step-1")}
-          >
-            Sign Up
-          </button>
-        </div>
+      <div className="collapse navbar-collapse d-flex justify-content-between w-100">
+      {/* Add data-bs-dismiss="offcanvas" to each link to close the nav on click */}
+      <ul className="navbar-nav d-none d-lg-flex mx-auto">
+        <li className="nav-item">
+          <a className="nav-link" href="#features">
+            Features
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="#testimonials">
+            Testimonials
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="#how-it-works" >
+            About
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="#need-help" data-bs-dismiss="offcanvas">
+            FAQs
+          </a>
+        </li>
+      </ul>
+      <div className="d-none d-lg-flex ms-auto">
+        <button
+          className="btn btn-outline-success me-2 rounded-pill px-3"
+          onClick={() => navigate("/login")}
+        >
+          Login
+        </button>
+        <button
+          className="btn btn-success rounded-pill px-4"
+          onClick={() => navigate("/register/step-1")}
+        >
+          Sign Up
+        </button>
       </div>
+    </div>
     </div>
   </nav>
 
-  {/* Hero Section */}
-  <div 
-    className="container text-center text-md-start py-5 d-flex align-items-center" 
+  {/* Offcanvas Navigation (for mobile) */}
+  <div
+    className="offcanvas offcanvas-start"
+    tabIndex="-1"
+    id="offcanvasNavbar"
+    aria-labelledby="offcanvasNavbarLabel"
     style={{
-      minHeight: "100vh",
+      width: "100%", /* 90% width of the screen */
     }}
   >
-    <div className="row mt-5 align-items-center w-100">
+    <div className="offcanvas-header">
+      {/* Make the mobile label a clickable link with same styling as desktop */}
+      <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
+        <a className="navbar-brand fw-bold fs-3 text-success" data-bs-dismiss="offcanvas" href="#features">
+          iFund
+        </a>
+      </h5>
+      <button
+        type="button"
+        className="btn-close text-reset"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div className="offcanvas-body">
+      {/* Add data-bs-dismiss="offcanvas" to each link to close the nav on click */}
+      <ul className="navbar-nav">
+        <li className="nav-item">
+          <a data-bs-dismiss="offcanvas" className="nav-link" href="#features">
+            Features
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="#testimonials">
+            Testimonials
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="#how-it-works">
+            About
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="#need-help">
+            FAQs
+          </a>
+        </li>
+      </ul>
+      <div className="d-flex flex-column">
+        <button
+          className="btn btn-outline-success me-2 rounded-pill px-3 mb-2"
+          onClick={() => navigate("/login")}
+        >
+          Login
+        </button>
+        <button
+          className="btn btn-success rounded-pill px-4"
+          onClick={() => navigate("/register/step-1")}
+        >
+          Sign Up
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {/* Hero Section */}
+  <div
+    className="container text-center text-md-start py-5 d-flex align-items-center"
+    style={{ minHeight: "100vh" }}
+  >
+    <div className="row align-items-center w-100">
       {/* Left Content */}
       <div className="col-md-6" data-aos="fade-right">
         <h1 className="display-4 fw-bold text-dark">
-          Save Together, <span className="text-success">Prosper Together.</span>
+          Save Together,{" "}
+          <span className="text-success">Prosper Together.</span>
         </h1>
         <p className="lead text-muted">
           Manage savings effortlessly with individual & community accounts,
@@ -141,34 +203,39 @@ const LandingPage = () => {
         </button>
       </div>
 
-      {/* Right Image */}
+      {/* Right Image (Centered) */}
       <div className="col-md-6 text-center" data-aos="fade-left">
         <img
           src="./landing.png"
           alt="Savings"
           className="img-fluid"
-          style={{ maxWidth: "500px", animation: "float 4s ease-in-out infinite" }}
+          style={{
+            maxWidth: "500px",
+            animation: "float 4s ease-in-out infinite",
+            width: "100%" /* Ensuring image adjusts to screen size */,
+            height: "auto",
+          }}
         />
       </div>
     </div>
   </div>
 </div>
 
-      {/* Floating Animation */}
-      <style>
-        {`
-  @keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
-  }
-      @media (max-width: 991px) {
-    .navbar-collapse {
-      background-color: #ECF0F3 !important; /* Solid background color for mobile */
+{/* Floating Animation */}
+<style>
+  {`
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
     }
-  }
-`}
-      </style>
+    @media (max-width: 768px) {
+      .offcanvas-start {
+        width: 100%; /* 90% width for mobile */
+      }
+    }
+  `}
+</style>
 
       {/* Features Section */}
       <section id="features" className="py-5">
@@ -281,7 +348,7 @@ const LandingPage = () => {
         </div>
 
         {/* Custom CSS */}
-        <style jsx>{`
+        <style>{`
           .dot {
             width: 12px;
             height: 12px;
@@ -321,19 +388,23 @@ const LandingPage = () => {
 
           <div className="row g-4">
             {/* Step 1 */}
-            <div className="col-md-6">
+            <div className="col-12 col-md-6">
               <div
-                className="p-4 rounded d-flex align-items-center"
+                className="p-4 rounded d-flex align-items-center flex-column flex-md-row"
                 style={{ backgroundColor: "#e3f2fd" }}
                 data-aos="fade-right"
               >
                 <img
                   src="./signup.jpeg"
                   alt="Sign Up"
-                  className="img-fluid rounded me-3"
-                  style={{ maxWidth: "200px" }}
+                  className="img-fluid rounded mb-3 mb-md-0 me-md-3"
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "200px",
+                    objectFit: "contain",
+                  }}
                 />
-                <div>
+                <div className="text-center text-md-start">
                   <h5 className="fw-bold">Sign Up</h5>
                   <p className="text-muted">
                     Create a free iFund account and set up your savings profile.
@@ -343,19 +414,23 @@ const LandingPage = () => {
             </div>
 
             {/* Step 2 */}
-            <div className="col-md-6">
+            <div className="col-12 col-md-6">
               <div
-                className="p-4 rounded d-flex align-items-center"
+                className="p-4 rounded d-flex align-items-center flex-column flex-md-row"
                 style={{ backgroundColor: "#e8f5e9" }}
                 data-aos="fade-left"
               >
                 <img
                   src="./saving.jpeg"
                   alt="Start Saving"
-                  className="img-fluid rounded me-3"
-                  style={{ maxWidth: "200px" }}
+                  className="img-fluid rounded mb-3 mb-md-0 me-md-3"
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "200px",
+                    objectFit: "contain",
+                  }}
                 />
-                <div>
+                <div className="text-center text-md-start">
                   <h5 className="fw-bold">Start Saving</h5>
                   <p className="text-muted">
                     Set savings goals, contribute funds, and track your
@@ -366,19 +441,23 @@ const LandingPage = () => {
             </div>
 
             {/* Step 3 */}
-            <div className="col-md-6">
+            <div className="col-12 col-md-6">
               <div
-                className="p-4 rounded d-flex align-items-center"
+                className="p-4 rounded d-flex align-items-center flex-column flex-md-row"
                 style={{ backgroundColor: "#fbe9e7" }}
                 data-aos="fade-right"
               >
                 <img
                   src="./withdraw.jpeg"
                   alt="Withdraw Anytime"
-                  className="img-fluid rounded me-3"
-                  style={{ maxWidth: "200px" }}
+                  className="img-fluid rounded mb-3 mb-md-0 me-md-3"
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "200px",
+                    objectFit: "contain",
+                  }}
                 />
-                <div>
+                <div className="text-center text-md-start">
                   <h5 className="fw-bold">Withdraw Anytime</h5>
                   <p className="text-muted">
                     Withdraw your funds securely whenever you need them.
@@ -388,19 +467,23 @@ const LandingPage = () => {
             </div>
 
             {/* Step 4 */}
-            <div className="col-md-6">
+            <div className="col-12 col-md-6">
               <div
-                className="p-4 rounded d-flex align-items-center"
+                className="p-4 rounded d-flex align-items-center flex-column flex-md-row"
                 style={{ backgroundColor: "#fff3cd" }}
                 data-aos="fade-left"
               >
                 <img
                   src="./communities.jpeg"
                   alt="Join Communities"
-                  className="img-fluid rounded me-3"
-                  style={{ maxWidth: "200px" }}
+                  className="img-fluid rounded mb-3 mb-md-0 me-md-3"
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "200px",
+                    objectFit: "contain",
+                  }}
                 />
-                <div>
+                <div className="text-center text-md-start">
                   <h5 className="fw-bold">Join Communities</h5>
                   <p className="text-muted">
                     Collaborate with others to reach shared financial goals
