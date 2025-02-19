@@ -77,7 +77,7 @@ const UserDetails = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       alert("User deleted successfully");
-      navigate("/admin/users");
+      navigate("/superadmin/users-list");
     } catch (error) {
       console.error("Error deleting user:", error);
     }
