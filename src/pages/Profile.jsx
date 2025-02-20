@@ -78,7 +78,7 @@ const ProfilePage = () => {
     formData.append("phone", editedPhone || user.phone);
 
     if (profilePic) {
-      formData.append("profilePic", profilePic);
+      formData.append("profilePic", files.profilePic);
     }
 
     try {
