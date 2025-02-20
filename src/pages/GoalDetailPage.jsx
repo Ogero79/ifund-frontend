@@ -962,7 +962,7 @@ const GoalDetailPage = () => {
                 <img
                   src={
                     member.profile_picture ||
-                    "https://via.placeholder.com/50"
+                    "https://placehold.co/50"
                   }
                   className="rounded-circle"
                   style={{ width: 60, height: 60, objectFit: "cover" }}

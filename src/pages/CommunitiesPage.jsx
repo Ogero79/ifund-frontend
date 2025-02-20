@@ -18,7 +18,7 @@ const CommunitiesPage = () => {
   const [communities, setCommunities] = useState([
     {
       id: 1,
-      image: "https://via.placeholder.com/60",
+      image: "https://placehold.co/60",
       title: "Small Business Boosters",
       subtitle:
         "Helping small business owners pool funds for shared costs and growth.",
@@ -30,7 +30,7 @@ const CommunitiesPage = () => {
     },
     {
       id: 2,
-      image: "https://via.placeholder.com/60",
+      image: "https://placehold.co/60",
       title: "Education Support Group",
       subtitle: "Pooling to fund education for members or their children.",
       members: 15,
@@ -41,7 +41,7 @@ const CommunitiesPage = () => {
     },
     {
       id: 3,
-      image: "https://via.placeholder.com/60",
+      image: "https://placehold.co/60",
       title: "Women's Empowerment Circle",
       subtitle:
         "Focused on empowering women through collective actions and icons.",
@@ -70,7 +70,7 @@ const CommunitiesPage = () => {
   const handleRegisterCommunity = () => {
     const community = {
       id: communities.length + 1,
-      image: previewImage || "https://via.placeholder.com/60",
+      image: previewImage || "https://placehold.co/60",
       title: newCommunity.name,
       subtitle: newCommunity.description,
       members: 0,
@@ -93,7 +93,7 @@ const CommunitiesPage = () => {
 
   return (
     <div className="communities-page-container" style={{ padding: "20px" }}>
-      <Header userImage="https://via.placeholder.com/50" userName="Brian" />
+      <Header userImage="https://placehold.co/50" userName="Brian" />
 
       <section className="communities-page" style={{ marginBottom: "150px" }}>
         <div className="d-flex align-items-center justify-content-between mb-3">

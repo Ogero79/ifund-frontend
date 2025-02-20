@@ -172,7 +172,7 @@ const UserDetails = () => {
           <Form.Group className="mb-3">
             <Form.Label>Front ID</Form.Label>
             <img
-              src={user.front_id_path || "https://via.placeholder.com/150"}
+              src={user.front_id_path || "https://placehold.co/150"}
               alt="Front ID"
               className="rounded"
               style={{
@@ -189,7 +189,7 @@ const UserDetails = () => {
           <Form.Group className="mb-3">
             <Form.Label>Back ID</Form.Label>
             <img
-              src={user.back_id_path || "https://via.placeholder.com/150"}
+              src={user.back_id_path || "https://placehold.co/150"}
               alt="Back ID"
               className="rounded"
               style={{

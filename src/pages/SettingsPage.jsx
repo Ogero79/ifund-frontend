@@ -8,7 +8,7 @@ import axios from "axios";
 const SettingsPage = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState(null);
-  const [userImage, setUserImage] = useState('https://via.placeholder.com/60');
+  const [userImage, setUserImage] = useState('https://placehold.co/60');
   const [accountStatus, setAccountStatus] = useState('inactive');
   const [currentTheme, setCurrentTheme] = useState('Light');
   const token = localStorage.getItem('authToken');

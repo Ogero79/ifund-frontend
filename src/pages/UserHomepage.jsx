@@ -58,11 +58,9 @@ const UserHomepage = () => {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-            withCredentials: true, // Must be included
+            withCredentials: true, 
           }
         );
-
-        console.log(response.data);
         if (response.data && response.data.account) {
           setBalance(response.data.account.balance);
         } else {
@@ -155,7 +153,7 @@ const UserHomepage = () => {
 
   return (
     <Container fluid className="py-4 px-3 px-md-5 px-lg-6 px-xl-7">
-      <Header userImage="https://via.placeholder.com/50" userName={userName} />
+      <Header userImage="https://placehold.co/50" userName={userName} />
 
       <div
         className="border rounded-5 p-4 mx-auto mb-4 shadow-sm"

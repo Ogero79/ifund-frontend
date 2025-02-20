@@ -137,7 +137,7 @@ const ProfilePage = () => {
                 <div className="position-relative d-inline-block mb-4">
                   <img
                     src={
-                      user.profile_picture || "https://via.placeholder.com/150"
+                      user.profile_picture || "https://placehold.co/150"
                     }
                     alt="Profile"
                     className="rounded-circle"

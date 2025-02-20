@@ -122,7 +122,7 @@ const SavingsPage = () => {
 
   return (
     <div className="savings-page py-4 px-3 px-md-5 px-lg-6 px-xl-7" >
-      <Header userImage="https://via.placeholder.com/50" userName={userName} />
+      <Header userImage="https://placehold.co/50" userName={userName} />
 
       {!loading && error && (
         <div className="alert alert-danger" role="alert">

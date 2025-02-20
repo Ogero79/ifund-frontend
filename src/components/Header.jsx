@@ -40,7 +40,7 @@ const Header = ({ userName }) => {
       <Row style={{ marginBottom: '50px' }}>
         <Col xs={6} md={6} className="d-flex align-items-center">
           <img
-            src={user.profile_picture || "https://via.placeholder.com/50"} 
+            src={user.profile_picture || "https://placehold.co/50"} 
             alt="User"
             className="rounded-circle"
             style={{ width: 60, height: 60, objectFit: 'cover' }}
