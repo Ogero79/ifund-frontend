@@ -67,7 +67,6 @@ const DepositPage = () => {
       return;
     }
 
-    // Validate if the M-Pesa number is correct (matches 10 digits)
     if (!depositDetails.mpesaNumber.match(/^\d{10}$/)) {
       setErrorAlert("Please enter a valid M-Pesa number.");
       return;
@@ -82,7 +81,6 @@ const DepositPage = () => {
     setLoading(true);
 
     try {
-      // Format the phone number before sending to the API (replace first 0 with 254)
       const formattedPhoneNumber = depositDetails.mpesaNumber.replace(/^0/, "254");
 
       const response = await fetch("https://ifund-backend.onrender.com/api/deposits", {
@@ -92,7 +90,7 @@ const DepositPage = () => {
         },
         body: JSON.stringify({
           ...depositDetails,
-          mpesaNumber: formattedPhoneNumber,  // Use formatted phone number here
+          mpesaNumber: formattedPhoneNumber,  
           userId,
         }),
       });
@@ -112,10 +110,10 @@ const DepositPage = () => {
           description: "",
         });
 
-        // Clear the success alert after 5 seconds
         setTimeout(() => {
           setShowAlert(false);
-        }, 5000);
+        }, 3000);
+        navigate("/login");
       } else {
         setLoading(false);
         setErrorAlert(data.message || "An error occurred. Please try again.");

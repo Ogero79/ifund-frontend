@@ -121,11 +121,10 @@ const LandingPage = () => {
     id="offcanvasNavbar"
     aria-labelledby="offcanvasNavbarLabel"
     style={{
-      width: "100%", /* 90% width of the screen */
+      width: "100%", 
     }}
   >
     <div className="offcanvas-header">
-      {/* Make the mobile label a clickable link with same styling as desktop */}
       <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
         <a className="navbar-brand fw-bold fs-3 text-success" data-bs-dismiss="offcanvas" href="#features">
           iFund
@@ -139,7 +138,6 @@ const LandingPage = () => {
       ></button>
     </div>
     <div className="offcanvas-body">
-      {/* Add data-bs-dismiss="offcanvas" to each link to close the nav on click */}
       <ul className="navbar-nav">
         <li className="nav-item">
           <a data-bs-dismiss="offcanvas" className="nav-link" href="#features">
