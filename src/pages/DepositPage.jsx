@@ -89,7 +89,6 @@ const DepositPage = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          'Authorization': 'Bearer wChwREaLMbXqYvA1eyRoQC1ScFTw',
         },
         body: JSON.stringify({
           ...depositDetails,
