@@ -113,7 +113,7 @@ const DepositPage = () => {
         setTimeout(() => {
           setShowAlert(false);
         }, 3000);
-        navigate("/login");
+        navigate("/user/home");
       } else {
         setLoading(false);
         setErrorAlert(data.message || "An error occurred. Please try again.");
