@@ -163,7 +163,7 @@ const GoalDetailPage = () => {
           title: goalData.title,
           description: goalData.description,
           target: goalData.target_amount,
-          image: goalData.image_url,
+          image: goalData.image_path,
           end_date: goalData.end_date,
         });
 
@@ -510,7 +510,7 @@ const GoalDetailPage = () => {
               <Card.Body className="text-dark">
                 <div className="position-relative mb-3">
                   <img
-                    src={goal.image_url}
+                    src={goal.image_path}
                     alt={goal.title}
                     className="w-100 rounded-3"
                     style={{

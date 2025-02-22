@@ -206,7 +206,7 @@ const SavingsPage = () => {
                 goals.map((goal) => (
                   <GoalCard
                     key={goal.goal_id}
-                    image={goal.image_url}
+                    image={goal.image_path}
                     title={goal.title}
                     progress={(goal.saved_amount / goal.target_amount) * 100}
                     target={goal.target_amount.toLocaleString()}
