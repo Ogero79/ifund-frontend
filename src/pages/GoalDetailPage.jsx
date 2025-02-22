@@ -82,7 +82,7 @@ const GoalDetailPage = () => {
         title: goalData.title,
         description: goalData.description,
         target: goalData.target_amount,
-        image: goalData.image_url,
+        image: goalData.image_path,
         end_date: goalData.end_date,
       });
 
